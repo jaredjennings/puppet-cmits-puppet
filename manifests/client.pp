@@ -58,6 +58,7 @@ scl enable apscl \"facter \$*\"
 ",
                     }
                 }
+                default: { fail "unimplemented on ${::osfamily} ${::operatingsystemrelease}" }
             }
         }
         'Darwin': {
@@ -81,7 +82,7 @@ scl enable apscl \"facter \$*\"
                 require => Mac_launchd_file[$service_name],
             }
         }
-        default: { unimplemented() }
+        default: { fail "unimplemented on ${::osfamily}" }
     }
 
 # It may be better to run the agent with cron rather than have it hanging about
