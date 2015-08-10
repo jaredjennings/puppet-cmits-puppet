@@ -19,7 +19,7 @@ class puppet::master {
 
 # This class is not (yet?) portable among Linux flavors or other OSes.
     if $::osfamily != "RedHat" {
-        unimplemented()
+        fail "unimplemented on ${::osfamily}"
     }
 
     include puppet::client
