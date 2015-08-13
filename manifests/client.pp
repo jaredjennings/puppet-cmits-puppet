@@ -45,14 +45,14 @@ class puppet::client {
                     }
                     file { '/usr/bin/puppet':
                         ensure => present,
-                        owner => root, group => 0, mode => 0755,
+                        owner => root, group => 0, mode => '0755',
                         content => "#!/bin/sh
 scl enable apscl \"puppet \$*\"
 ",
                     }
                     file { '/usr/bin/facter':
                         ensure => present,
-                        owner => root, group => 0, mode => 0755,
+                        owner => root, group => 0, mode => '0755',
                         content => "#!/bin/sh
 scl enable apscl \"facter \$*\"
 ",

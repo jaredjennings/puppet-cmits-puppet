@@ -42,7 +42,7 @@ class puppet::master {
     }
 
     file { "/etc/sysconfig/puppetmaster":
-        owner => root, group => 0, mode => 0644,
+        owner => root, group => 0, mode => '0644',
         content => "\
 PUPPETMASTER_LOG=syslog\n\
 PUPPETMASTER_MANIFEST=/etc/puppet/manifests/site.pp\n",
@@ -52,7 +52,7 @@ PUPPETMASTER_MANIFEST=/etc/puppet/manifests/site.pp\n",
 # Install the SELinux rules that let puppetmaster do its job.
     $selmoduledir = "/usr/share/selinux/targeted"
     file { "${selmoduledir}/puppetmaster.pp":
-        owner => root, group => 0, mode => 0644,
+        owner => root, group => 0, mode => '0644',
         source => "puppet:///modules/puppet/\
 puppetmaster.selinux.pp",
     }
@@ -112,7 +112,7 @@ puppetmaster.selinux.pp",
 # serving itself a catalog, but do get in the way of manifests being
 # compiled into catalogs for other nodes.
     file { '/var/lib/puppet/lib':
-        owner => root, group => puppet, mode => 0640,
+        owner => root, group => puppet, mode => '0640',
         recurse => true, recurselimit => 9,
     }
 
@@ -126,21 +126,21 @@ puppetmaster.selinux.pp",
 # root's \verb!.bashrc!; see~\S\ref{class_root::stig}.
 
     file { '/usr/sbin/sign_expected':
-        owner => root, group => 0, mode => 0755,
+        owner => root, group => 0, mode => '0755',
         source => 'puppet:///modules/puppet/sign_expected',
     }
     file { '/usr/sbin/expect_host':
-        owner => root, group => 0, mode => 0755,
+        owner => root, group => 0, mode => '0755',
         source => 'puppet:///modules/puppet/expect_host',
     }
     file { '/usr/sbin/unexpect_host':
-        owner => root, group => 0, mode => 0755,
+        owner => root, group => 0, mode => '0755',
         ensure => symlink,
         target => 'expect_host',
     }
     file { '/var/spool/sign_expected':
         ensure => directory,
-        owner => root, group => 0, mode => 0700,
+        owner => root, group => 0, mode => '0700',
     }
     exec { 'run sign_expected at boot':
         unless => 'grep sign_expected /etc/rc.local',
@@ -164,7 +164,7 @@ puppetmaster.selinux.pp",
     
 # Provide for admins to easily manually update the policy.
     file { '/usr/sbin/sudo_update_cmits_policy':
-        owner => root, group => 0, mode => 0755,
+        owner => root, group => 0, mode => '0755',
         content => "#!/bin/sh
 /usr/bin/sudo /usr/bin/svn --non-interactive up /etc/puppet
 /usr/bin/sudo /sbin/restorecon -R /etc/puppet
@@ -174,7 +174,7 @@ puppetmaster.selinux.pp",
 
 # Update the policy every hour.
     file { '/usr/sbin/update_cmits_policy':
-        owner => root, group => 0, mode => 0700,
+        owner => root, group => 0, mode => '0700',
         content => "#!/bin/sh
 /usr/bin/svn --non-interactive -q up /etc/puppet
 /sbin/restorecon -R /etc/puppet
